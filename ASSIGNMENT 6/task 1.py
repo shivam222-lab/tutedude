@@ -1,41 +1,99 @@
-import tkinter as tk
 
-def on_click(event):
-    text = event.widget.cget("text")
-    if text == "=":
-        try:
-            result = str(eval(str(entry.get())))
-            entry.delete(0, tk.END)
-            entry.insert(tk.END, result)
-        except Exception as e:
-            entry.delete(0, tk.END)
-            entry.insert(tk.END, "Error")
-    elif text == "C":
-        entry.delete(0, tk.END)
-    else:
-        entry.insert(tk.END, text)
+from tkinter import *
 
-root = tk.Tk()
-root.title("Calculator")
+window = Tk()
+window.geometry("500x500")
 
-entry = tk.Entry(root, font="Arial 20")
-entry.grid(row=0, column=0, columnspan=4, ipadx=8, ipady=8)
+e = Entry(window, width = 56 ,borderwidth = 5 )
+e.place(x = 0 ,y = 0)
 
-buttons = [
-    "7", "8", "9", "/",
-    "4", "5", "6", "*",
-    "1", "2", "3", "-",
-    "0", "C", "=", "+"
-]
+def click(num):
+    result = e.get()
+    e.delete(0,END)
+    e.insert(0,str(result) + str(num))
 
-row, col = 1, 0
-for btn in buttons:
-    b = tk.Button(root, text=btn, font="Arial 18", width=5, height=2)
-    b.grid(row=row, column=col)
-    b.bind("<Button-1>", on_click)
-    col += 1
-    if col > 3:
-        col = 0
-        row += 1
+b =Button(window,text = '1' , width = 12 ,command=lambda:click(1))
+b.place(x = 10,y=60)
+b =Button(window,text = '2' , width = 12,command=lambda:click(2))
+b.place(x = 80,y=60)
+b =Button(window,text = '3' , width = 12,command=lambda:click(3))
+b.place(x = 170,y=60)
+b =Button(window,text = '4' , width = 12 ,command=lambda:click(4))
+b.place(x = 10,y=120)
+b =Button(window,text = '5' , width = 12,command=lambda:click(5))
+b.place(x = 80,y=120)
+b =Button(window,text = '6' , width = 12 ,command=lambda:click(6))
+b.place(x = 170,y=120)
+b =Button(window,text = '7' , width = 12 ,command=lambda:click(7))
+b.place(x = 10,y=180)
+b =Button(window,text = '8' , width = 12 ,command=lambda:click(8))
+b.place(x = 80,y=180)
+b =Button(window,text = '9' , width = 12 ,command=lambda:click(9))
+b.place(x = 170,y=180)
+b =Button(window,text = '0' , width = 12 ,command=lambda:click(0))
+b.place(x = 10,y=240)
 
-root.mainloop()
+#OPERATORS:
+def add():
+    n1 = e.get()
+    global math
+    math = "addition"
+    global i
+    i = int(n1)
+    e.delete(0,END)
+b =Button(window,text = '+' , width = 12 ,command=add)
+b.place(x = 80,y=240)
+
+def sub():
+    n1 = e.get()
+    global math
+    math = "subtration"
+    global i
+    i = int(n1)
+    e.delete(0,END)
+b =Button(window,text = '-' , width = 12 ,command=sub)
+b.place(x = 170,y=240)
+
+def mult():
+    n1 = e.get()
+    global math
+    math = "multiplication"
+    global i
+    i = int(n1)
+    e.delete(0,END)
+b =Button(window,text = '*' , width = 12 ,command=mult)
+b.place(x = 10,y=300)
+
+def div():
+    n1 = e.get()
+    global math
+    math = "division"
+    global i
+    i = int(n1)
+    e.delete(0,END)
+b =Button(window,text = '/' , width = 12 ,command=div)
+b.place(x = 80,y=300)
+
+def equal():
+    n2 = e.get()
+    e.delete(0,END)
+    if math == "addition":
+        e.insert(0,i + int(n2))
+    elif math == "subtration":
+        e.insert(0 ,i - int(n2))
+    elif math == "multiplication":
+        e.insert(0 ,i * int(n2)) 
+    elif math == "division":
+        e.insert(0 ,i / int(n2)) 
+
+b =Button(window,text = '=' , width = 12 ,command=equal)
+b.place(x = 170,y=300)
+
+def clear():
+    e.delete(0,END)
+
+
+b =Button(window,text = 'clear' , width = 12,command=clear)
+b.place(x = 10,y=350)
+
+mainloop()
